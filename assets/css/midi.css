@@ -1,0 +1,14 @@
+.midi-cmd-table {
+    width: 50%;
+    height: 35%;
+}
+.midi-cmd-table tr {
+    height: 50px;
+    align-content: center;
+}
+.midi-cmd-table input, button, select {
+    width: 90%;
+    height: 90%;
+    text-align: center;
+    font-size: 90%;
+}

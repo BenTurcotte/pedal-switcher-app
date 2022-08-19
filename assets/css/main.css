@@ -1,0 +1,28 @@
+* {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.horizontal-flex {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+button {
+  border-radius: 2px;
+  border-color: darkslategray;
+  border-width: 1%;
+  cursor: pointer;
+  background-color: whitesmoke;
+  color: darkslategray;
+  transition-duration: 0.3s;
+  box-shadow: unset;
+  font-size: 90%;
+}
+button:hover {
+  background-color: darkslategray;
+  color: whitesmoke;
+  box-shadow: 0px 0px 5px gray;
+}
+button.default-option {
+  background-color: darkslategray;
+  color: whitesmoke;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='mainWindowApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>APP</title>
+  <script src="angular/angular.js"></script>
+  <!-- wait for angular stuff to load before showing stuff -->
+  <style>
+    [ng\:cloak], [ng-cloak], .ng-cloak {
+      display: none;
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/pedal.css" />
+  <link rel="stylesheet" href="assets/css/midi.css" />
+</head>
+<body>
+  <p id="boxConnectionInfo" style="font-size: small; font-weight: lighter; font-style: italic; align-self: center;">
+    Connected to box at {{boxAddress}}:{{boxPort}}
+  </p>
+  <hr />
+  <h2>Audio Loops</h2>
+  <div ng-controller='loopsCtrl'>
+    <table class='pedal-table'>
+      <tr>
+        <td ng-repeat='loop in loops.slice(0,4)'>
+          <div class="pedal" ng-class="{'pedal-off' : !loop.engagged, 'pedal-on' : loop.engagged}" ng-click='loop.toggleState()'>
+            <p>{{loop.name}}</p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td ng-repeat='loop in loops.slice(4)'>
+          <div class="pedal" ng-class="{'pedal-off' : !loop.engagged, 'pedal-on' : loop.engagged}" ng-click='loop.toggleState()'>
+            <p>{{loop.name}}</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <hr />
+  <h2>MIDI Devices</h2>
+  <div ng-controller='midiDevicesCtrl'>
+    <div ng-repeat='device in devices'>
+      <h3>{{device.name}}</h3>
+      <p>Channel: {{device.channel}}</p>
+      <!-- might need to put tables each in a form for this to work? -->
+      <table>
+        <!-- PC -->
+        <tr>
+          <td>Preset Selection</td>
+          <td>
+            <input type='number' min='{{device.pc.min}}' max='{{device.pc.max}}' ng-model='device.pc.currentValue' ng-change='device.pc.sendCommand()'>
+          </td>
+        </tr>
+        <!-- CC Knobs -->
+        <tr ng-repeat='knob in device.cc.knobs'>
+          <td>{{knob.name}}</td>
+          <td>
+            <input type="range" min="{{knob.min}}" max="{{knob.max}}" ng-model='knob.currentValue' ng-change='knob.onValueChanged()'>
+          </td>
+          <td>({{knob.currentValue}})</td>
+        </tr>
+        <!-- CC Selectors -->
+        <tr ng-repeat='sel in device.cc.selectors'>
+          <td>{{sel.name}}</td>
+          <td>
+            <select ng-model='sel.currentValue' ng-change='sel.onValueChanged()'>
+              <option ng-repeat='valOp in sel.valueOptions' value='{{valOp.value}}'>{{valOp.name}}</option>
+            </select>
+          </td>
+        </tr>
+        <!-- CC One-Shot Commands -->
+        <tr>
+          <td ng-repeat='cmd in device.cc.singles'>
+            <button ng-click='cmd.sendCommand()' style="min-width: 120px;">{{cmd.name}}</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript" src="mainWindow.js"></script>
+</body>
+</html>

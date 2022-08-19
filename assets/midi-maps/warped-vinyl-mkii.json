@@ -1,0 +1,11 @@
+{
+    "name": "warped-vinyl-mkii",
+    "type": "pedal",
+    "sends-midi-pc-on-bypass": true,
+    "midi-cc-sweep-parameters": [
+        {
+            "name": "tone",
+            "cc-param": "14"
+        }
+    ]
+}
